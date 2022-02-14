@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const HardSourceWebpackPlugin = require("hard-source-webpack-plugin");
 const babelPlugins = require("./babel.plugins");
 const UnusedWebpackPlugin = require("unused-webpack-plugin");
+const CopyPlugin = require("copy-webpack-plugin");
 
 const packagesToTranspile = [
   '@polkadot/api',
@@ -133,14 +134,14 @@ module.exports = {
     rules: [
       {
         test: /\.(ts)x?$/,
-        exclude: /node_modules/,
+        exclude: exceptionToTranspile,
         loader: "babel-loader",
         options: babelTsConfig,
       },
       {
         test: /\.js$/i,
         loader: "babel-loader",
-        exclude: /node_modules/,
+        exclude: exceptionToTranspile,
         options: babelConfig,
       },
       {
@@ -154,21 +155,21 @@ module.exports = {
       },
       process.env.V3
         ? {
-          test: /\.woff2/,
-          use: [
-            {
-              loader: "file-loader",
-              options: {
-                name: "[name].[ext]",
-                outputPath: "assets/fonts/",
+            test: /\.woff2/,
+            use: [
+              {
+                loader: "file-loader",
+                options: {
+                  name: "[name].[ext]",
+                  outputPath: "assets/fonts/",
+                },
               },
-            },
-          ],
-        }
+            ],
+          }
         : {
-          test: /\.(woff|woff2|eot|ttf|otf)$/i,
-          use: ["file-loader"],
-        },
+            test: /\.(woff|woff2|eot|ttf|otf)$/i,
+            use: ["file-loader"],
+          },
       {
         test: /\.(png|jpe?g|gif|svg)$/i,
         use: {
@@ -192,30 +193,30 @@ module.exports = {
     },
     ...(process.env.V3
       ? {
-        extensions: [
-          ".v3.tsx",
-          ".v3.ts",
-          ".v3.jsx",
-          ".v3.js",
-          ".tsx",
-          ".ts",
-          ".jsx",
-          ".js",
-          "...",
-        ],
-      }
+          extensions: [
+            ".v3.tsx",
+            ".v3.ts",
+            ".v3.jsx",
+            ".v3.js",
+            ".tsx",
+            ".ts",
+            ".jsx",
+            ".js",
+            "...",
+          ],
+        }
       : {
-        extensions: [
-          ".jsx",
-          ".js",
-          ".v3.tsx",
-          ".v3.ts",
-          ".v3.jsx",
-          ".v3.js",
-          ".tsx",
-          ".ts",
-          "...",
-        ],
-      }),
+          extensions: [
+            ".jsx",
+            ".js",
+            ".v3.tsx",
+            ".v3.ts",
+            ".v3.jsx",
+            ".v3.js",
+            ".tsx",
+            ".ts",
+            "...",
+          ],
+        }),
   },
 };
