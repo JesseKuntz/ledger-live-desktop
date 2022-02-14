@@ -145,9 +145,8 @@ module.exports = {
         options: babelConfig,
       },
       {
-        test: /.js$/i,
+        test: /\.js$/i,
         loader: require.resolve('@open-wc/webpack-import-meta-loader'),
-        include: packageWithMetaloader,
       },
       {
         test: /\.css$/i,
