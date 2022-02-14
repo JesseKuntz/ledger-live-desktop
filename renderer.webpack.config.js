@@ -42,7 +42,9 @@ const exceptionToTranspile = (path_ruled) => {
   }
 
   // Ignore all other modules that are in node_modules
-  if (path_ruled.match(path.resolve(__dirname, "node_modules"))) { return true; }
+  if (path_ruled.match(/node_modules/)) {
+    return true;
+  }
 
   else return false;
 }
